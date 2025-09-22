@@ -109,7 +109,7 @@ public class WebDriverUtils {
 		try {
 			String className = instance.getClass().getEnclosingClass().getSimpleName();
 			String methodName = instance.getClass().getEnclosingMethod().getName();
-			Files.move(tempFile, new File("C:\\Users\\user\\Documents\\lms2025_RP2\\test_evidence\\" + className + "_" + methodName + "_" + suffix + ".png"));
+			Files.move(tempFile, new File("evidence\\" + className + "_" + methodName + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

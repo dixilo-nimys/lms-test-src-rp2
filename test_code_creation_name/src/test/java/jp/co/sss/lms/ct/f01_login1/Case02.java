@@ -3,6 +3,7 @@ package jp.co.sss.lms.ct.f01_login1;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,6 +44,8 @@ public class Case02 {
 	void test01() {
 		// TODO ここに追加
 		goTo("http://localhost:8080/lms/");
+		assertEquals("http://localhost:8080/lms/",webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object(){});
 	}
 
 	@Test
