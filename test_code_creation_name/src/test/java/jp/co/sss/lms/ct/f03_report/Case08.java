@@ -70,7 +70,7 @@ public class Case08 {
 	@DisplayName("テスト03 提出済の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		// TODO ここに追加
-		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[2]/table/tbody/tr[1]/td[5]/form/input[3]"));
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[2]/table/tbody/tr[2]/td[5]/form/input[3]"));
 		qa.click();
 		WebDriverUtils.getEvidence(new Object() {
 		});
@@ -81,7 +81,8 @@ public class Case08 {
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
 		// TODO ここに追加
-		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"sectionDetail\"]/table/tbody/tr[2]/td/form/input[6]"));
+		scrollBy("200");
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"sectionDetail\"]/table[2]/tbody/tr[3]/td/form/input[6]"));
 		qa.click();
 		WebDriverUtils.getEvidence(new Object() {
 		});
@@ -92,12 +93,13 @@ public class Case08 {
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しセクション詳細画面に遷移")
 	void test05() {
 		// TODO ここに追加
-		final WebElement report = webDriver.findElement(By.id("content_0"));
+		scrollBy("600");
+		final WebElement report = webDriver.findElement(By.id("content_2"));
 		report.clear();
-		report.sendKeys("修正済み日報");
-		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/form/div[2]/fieldset/div/div/button"));
+		report.sendKeys("修正済み週報");
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/form/div[3]/fieldset/div/div/button"));
 		qa.click();
-		assertEquals("http://localhost:8080/lms/section/detail?sectionId=1", webDriver.getCurrentUrl());
+		assertEquals("http://localhost:8080/lms/section/detail?sectionId=2", webDriver.getCurrentUrl());
 		WebDriverUtils.getEvidence(new Object() {
 		});
 	}
@@ -120,9 +122,9 @@ public class Case08 {
 	void test07() {
 		// TODO ここに追加
 		scrollBy("600");
-	final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/table[3]/tbody/tr[3]/td[5]/form[1]/input[1]"));
+	final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/table[3]/tbody/tr[2]/td[5]/form[1]/input[1]"));
 	qa.click();
-	assertEquals("http://localhost:8080/lms/report/detail", webDriver.getCurrentUrl());
+	assertEquals("レポート詳細 | LMS", webDriver.getTitle());
 	WebDriverUtils.getEvidence(new Object() {
 	});
 	}
