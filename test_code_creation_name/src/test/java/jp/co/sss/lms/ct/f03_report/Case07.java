@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f03_report;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +10,10 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト レポート機能
@@ -36,6 +41,10 @@ public class Case07 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		goTo("http://localhost:8080/lms/");
+		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -43,6 +52,17 @@ public class Case07 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		final WebElement id = webDriver.findElement(By.name("loginId"));
+		id.clear();
+		id.sendKeys("StudentAA01");
+		final WebElement pass = webDriver.findElement(By.name("password"));
+		pass.clear();
+		pass.sendKeys("StudentAA0123");
+		final WebElement login = webDriver
+				.findElement(By.xpath("//*[@id=\"main\"]/div[1]/form/fieldset/div[3]/div/input"));
+		login.click();
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -50,6 +70,10 @@ public class Case07 {
 	@DisplayName("テスト03 未提出の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		// TODO ここに追加
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[2]/table/tbody/tr[1]/td[5]/form/input[3]"));
+		qa.click();
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -57,6 +81,10 @@ public class Case07 {
 	@DisplayName("テスト04 「提出する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
 		// TODO ここに追加
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"sectionDetail\"]/table/tbody/tr[2]/td/form/input[5]"));
+		qa.click();
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -64,6 +92,13 @@ public class Case07 {
 	@DisplayName("テスト05 報告内容を入力して「提出する」ボタンを押下し確認ボタン名が更新される")
 	void test05() {
 		// TODO ここに追加
+		final WebElement report = webDriver.findElement(By.id("content_0"));
+		report.sendKeys("日報");
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/form/div[2]/fieldset/div/div/button"));
+		qa.click();
+		assertEquals("http://localhost:8080/lms/section/detail?sectionId=1", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 }
