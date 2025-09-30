@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f06_login2;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +10,10 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト ログイン機能②
@@ -36,6 +41,10 @@ public class Case17 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		goTo("http://localhost:8080/lms/");
+		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -43,6 +52,18 @@ public class Case17 {
 	@DisplayName("テスト02 DBに初期登録された未ログインの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		final WebElement id = webDriver.findElement(By.name("loginId"));
+		id.clear();
+		id.sendKeys("StudentAA01");
+		final WebElement pass = webDriver.findElement(By.name("password"));
+		pass.clear();
+		pass.sendKeys("StudentAA0123");
+		final WebElement login = webDriver
+				.findElement(By.xpath("//*[@id=\"main\"]/div[1]/form/fieldset/div[3]/div/input"));
+		login.click();
+		pageLoadTimeout(10);
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -50,6 +71,15 @@ public class Case17 {
 	@DisplayName("テスト03 「同意します」チェックボックスにチェックを入れ「次へ」ボタン押下")
 	void test03() {
 		// TODO ここに追加
+		scrollBy("200");
+		final WebElement flg = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div[2]/form/fieldset/div[1]/div/label/input[1]"));
+		flg.click();
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div[2]/form/fieldset/div[2]/button"));
+		qa.click();
+		pageLoadTimeout(10);
+		assertEquals("http://localhost:8080/lms/password/changePassword", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -57,6 +87,25 @@ public class Case17 {
 	@DisplayName("テスト04 変更パスワードを入力し「変更」ボタン押下")
 	void test04() {
 		// TODO ここに追加
+		final WebElement currentPassword = webDriver.findElement(By.id("currentPassword"));
+		currentPassword.clear();
+		currentPassword.sendKeys("StudentAA0123");
+		final WebElement password = webDriver.findElement(By.id("password"));
+		password.clear();
+		password.sendKeys("StudentAA01");
+		final WebElement passwordConfirm = webDriver.findElement(By.id("passwordConfirm"));
+		passwordConfirm.clear();
+		passwordConfirm.sendKeys("StudentAA01");
+		scrollBy("200");
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"upd-form\"]/div[1]/fieldset/div[4]/div/button[2]"));
+		qa.click();
+		visibilityTimeout(By.id("upd-btn"),10);
+		final WebElement upb = webDriver.findElement(By.id("upd-btn"));
+		upb.click();
+		pageLoadTimeout(10);
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 }
