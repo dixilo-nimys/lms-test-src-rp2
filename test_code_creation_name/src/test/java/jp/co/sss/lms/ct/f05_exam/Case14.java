@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f05_exam;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
 
@@ -11,6 +12,11 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト 試験実施機能
@@ -41,6 +47,10 @@ public class Case14 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		goTo("http://localhost:8080/lms/");
+		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -48,6 +58,17 @@ public class Case14 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		final WebElement id = webDriver.findElement(By.name("loginId"));
+		id.clear();
+		id.sendKeys("StudentAA01");
+		final WebElement pass = webDriver.findElement(By.name("password"));
+		pass.clear();
+		pass.sendKeys("StudentAA0123");
+		final WebElement login = webDriver
+				.findElement(By.xpath("//*[@id=\"main\"]/div[1]/form/fieldset/div[3]/div/input"));
+		login.click();
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -55,6 +76,12 @@ public class Case14 {
 	@DisplayName("テスト03 「試験有」の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		// TODO ここに追加
+		WebDriverUtils.visibilityTimeout(By.xpath("//*[@id=\"main\"]/div/div[2]/div[2]/table/tbody/tr[2]/td[5]/form/input[3]"),60);
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[2]/table/tbody/tr[2]/td[5]/form/input[3]"));
+		qa.click();
+		assertEquals("http://localhost:8080/lms/section/detail",webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -62,6 +89,11 @@ public class Case14 {
 	@DisplayName("テスト04 「本日の試験」エリアの「詳細」ボタンを押下し試験開始画面に遷移")
 	void test04() {
 		// TODO ここに追加
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"sectionDetail\"]/table[1]/tbody/tr[2]/td[2]/form/input[1]"));
+		qa.click();
+		assertEquals("試験【ITリテラシー①】 | LMS", webDriver.getTitle());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -69,6 +101,11 @@ public class Case14 {
 	@DisplayName("テスト05 「試験を開始する」ボタンを押下し試験問題画面に遷移")
 	void test05() {
 		// TODO ここに追加
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/div/form/input[4]"));
+		qa.click();
+		assertEquals("ITリテラシー① | LMS", webDriver.getTitle());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -76,6 +113,47 @@ public class Case14 {
 	@DisplayName("テスト06 正答と誤答が半々で「確認画面へ進む」ボタンを押下し試験回答確認画面に遷移")
 	void test06() {
 		// TODO ここに追加
+		final WebElement q1 = webDriver.findElement(By.id("answer-0-2"));
+		q1.click();
+		scrollBy("300");
+		final WebElement q2 = webDriver.findElement(By.id("answer-1-0"));
+		q2.click();
+		scrollBy("300");
+		final WebElement q3 = webDriver.findElement(By.id("answer-2-0"));
+		q3.click();
+		scrollBy("400");
+		final WebElement q4 = webDriver.findElement(By.id("answer-3-1"));
+		q4.click();
+		scrollBy("350");
+		final WebElement q5 = webDriver.findElement(By.id("answer-4-1"));
+		q5.click();
+		scrollBy("300");
+		final WebElement q6 = webDriver.findElement(By.id("answer-5-0"));
+		q6.click();
+		scrollBy("600");
+		final WebElement q7 = webDriver.findElement(By.id("answer-6-3"));
+		q7.click();
+		scrollBy("300");
+		final WebElement q8 = webDriver.findElement(By.id("answer-7-0"));
+		q8.click();
+		scrollBy("350");
+		final WebElement q9 = webDriver.findElement(By.id("answer-8-1"));
+		q9.click();
+		scrollBy("350");
+		final WebElement q10 = webDriver.findElement(By.id("answer-9-0"));
+		q10.click();
+		scrollBy("300");
+		final WebElement q11 = webDriver.findElement(By.id("answer-10-1"));
+		q11.click();
+		scrollBy("300");
+		final WebElement q12 = webDriver.findElement(By.id("answer-11-0"));
+		q12.click();
+		scrollBy("500");
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"examQuestionForm\"]/div[13]/fieldset/input"));
+		qa.click();
+		assertEquals("http://localhost:8080/lms/exam/answerCheck", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -83,6 +161,15 @@ public class Case14 {
 	@DisplayName("テスト07 「回答を送信する」ボタンを押下し試験結果画面に遷移")
 	void test07() throws InterruptedException {
 		// TODO ここに追加
+		scrollBy("2000");
+		final WebElement qa = webDriver.findElement(By.id("sendButton"));
+		qa.click();
+		Alert alert = webDriver.switchTo().alert();
+		assertEquals("回答を送信します。よろしいですか？", alert.getText());
+		alert.accept();
+		assertEquals("http://localhost:8080/lms/exam/result", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -90,6 +177,12 @@ public class Case14 {
 	@DisplayName("テスト08 「戻る」ボタンを押下し試験開始画面に遷移後当該試験の結果が反映される")
 	void test08() {
 		// TODO ここに追加
+		scrollBy("5000");
+		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"examBeing\"]/div[13]/fieldset/form/input[1]"));
+		qa.click();
+		assertEquals("http://localhost:8080/lms/exam/start", webDriver.getCurrentUrl());
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 }
