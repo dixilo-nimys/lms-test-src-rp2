@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import jp.co.sss.lms.ct.util.WebDriverUtils;
 
@@ -93,10 +94,22 @@ public class Case08 {
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しセクション詳細画面に遷移")
 	void test05() {
 		// TODO ここに追加
-		scrollBy("600");
+		final WebElement inFiled = webDriver.findElement(By.id("intFieldName_0"));
+		inFiled.clear();
+		inFiled.sendKeys("項目");
+		final Select inFiledValue = new Select(webDriver.findElement(By.id("intFieldValue_0")));
+		inFiledValue.selectByIndex(0); 
+		inFiledValue.selectByValue("2"); 
+		final WebElement content = webDriver.findElement(By.id("content_0"));
+		content.clear();
+		content.sendKeys("5");
+		final WebElement other = webDriver.findElement(By.id("content_1"));
+		other.clear();
+		other.sendKeys("所感");
 		final WebElement report = webDriver.findElement(By.id("content_2"));
 		report.clear();
-		report.sendKeys("修正済み週報");
+		report.sendKeys("修正済み週報。①や｜、｛｝などの特殊記号も使用可能です");
+		scrollBy("300");
 		final WebElement qa = webDriver.findElement(By.xpath("//*[@id=\"main\"]/form/div[3]/fieldset/div/div/button"));
 		qa.click();
 		assertEquals("http://localhost:8080/lms/section/detail?sectionId=2", webDriver.getCurrentUrl());
